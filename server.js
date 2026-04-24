@@ -4,7 +4,7 @@ const express = require('express');
 const IntegrationPos = require('integration-pos-service');
 const console = require('console');
 // Configuración de dispositivos
-let devicesConfig = { "device003": "192.168.1.181", "device004": "192.168.1.182", "device002": "192.168.0.20" };
+let devicesConfig = { "device002": "192.168.0.20" };
 var NetServer = IntegrationPos.initialize({
     port: 5454,
     host: '0.0.0.0',
