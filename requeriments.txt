@@ -1,0 +1,2 @@
+npm i express
+npm install integration-pos-service@1.1.0

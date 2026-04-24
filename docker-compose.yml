@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  pos-integration:
+    build: .
+    container_name: pos-integration-server
+    restart: unless-stopped
+    ports:
+      - "5454:5454"
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
