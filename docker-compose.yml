@@ -1,13 +1,13 @@
 version: '3.9'
 
 services:
-  red-enlace:
-    build: ./red-enlace
+  pos-integration:
+    build: .
     container_name: pos-integration-server
     restart: unless-stopped
     ports:
       - "5454:5454"
-      - "8001:8000"
+      - "8000:8000"
     environment:
       - NODE_ENV=production
 
@@ -16,4 +16,4 @@ services:
     container_name: biometrico-server
     restart: unless-stopped
     ports:
-      - "5001:5000"
+      - "5000:5000"
