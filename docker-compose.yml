@@ -5,6 +5,8 @@ services:
     build: .
     container_name: pos-integration-server
     restart: unless-stopped
-    network_mode: host   # 👈 IMPORTANTE
+    ports:
+      - "5454:5454"
+      - "8000:8000"
     environment:
       - NODE_ENV=production
