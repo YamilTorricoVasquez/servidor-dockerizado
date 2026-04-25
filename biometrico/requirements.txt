@@ -1,5 +1,5 @@
 flask>=2.3.0
-pyzk>=0.9
-pyopenssl>=23.0.0
 requests>=2.31.0
+pyopenssl>=23.0.0
 gunicorn>=21.2.0
+psycopg2-binary>=2.9
