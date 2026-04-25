@@ -13,9 +13,9 @@ COPY . .
 RUN npm init -y
 
 # Instalar dependencias necesarias
-RUN npm install express --only=production && \
+RUN npm install express integration-pos-service@1.1.0 --only=production && \
     npm cache clean --force
-COPY requirements.txt .
+
 # Cambiar a usuario no-root
 USER nodeapp
 
