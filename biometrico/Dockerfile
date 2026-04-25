@@ -2,20 +2,25 @@ FROM python:3.11-alpine
 
 WORKDIR /app
 
-# Instalar dependencias del sistema necesarias
-RUN apk add --no-cache gcc musl-dev libffi-dev openssl-dev
+# Variables de entorno
+ENV PYTHONUNBUFFERED=1
 
-# Copiar requirements
-COPY requirements.txt .
+# Dependencias del sistema
+RUN apk add --no-cache \
+    gcc \
+    musl-dev \
+    libffi-dev \
+    openssl-dev
 
 # Instalar dependencias Python
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar código
 COPY . .
 
-# Exponer puerto (ejemplo Flask)
+# Exponer puerto
 EXPOSE 5000
 
-# Ejecutar servidor
-CMD ["python", "server-biometrico.py"]
+# Usar Gunicorn (PRODUCCIÓN)
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "server-biometrico:app"]
