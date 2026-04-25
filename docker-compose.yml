@@ -6,7 +6,26 @@ services:
     container_name: pos-integration-server
     restart: unless-stopped
     ports:
-      - "5454:5454"
-      - "8000:8000"
+      - "5454:5454"  # Puerto TCP para POS
+      - "8000:8000"  # Puerto HTTP para API
     environment:
       - NODE_ENV=production
+      - HTTP_PORT=8000
+      - TCP_PORT=5454
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - pos-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  pos-network:
+    driver: bridge
