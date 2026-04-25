@@ -11,7 +11,7 @@ COPY package*.json ./
 
 RUN npm ci --only=production && \
     npm cache clean --force
-
+COPY requirements.txt .
 COPY . .
 
 # Cambiar a usuario no-root
