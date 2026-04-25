@@ -1,25 +1,27 @@
 FROM node:20-alpine
 
-# Crear usuario no-root por seguridad
+# Usuario no-root
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodeapp -u 1001 -G nodejs
 
 WORKDIR /app
 
-# Copiar package.json primero para cachear dependencias
+# Copiar dependencias primero (cache optimizado)
 COPY package*.json ./
 
-RUN npm ci --only=production && \
+# Instalar dependencias (más seguro usar npm install si no tienes lock)
+RUN npm install --only=production && \
     npm cache clean --force
-COPY requirements.txt .
+
+# Copiar todo el proyecto
 COPY . .
 
-# Cambiar a usuario no-root
+# Cambiar usuario
 USER nodeapp
 
-# === PUERTOS CORREGIDOS (sin comentarios en la misma línea) ===
+# Puertos
 EXPOSE 5454
 EXPOSE 8000
 
-# Comando de inicio
-CMD ["node", "server.js"]   
+# Inicio
+CMD ["node", "server.js"]
