@@ -6,17 +6,17 @@ RUN addgroup -g 1001 -S nodejs && \
 
 WORKDIR /app
 
-# Copiar dependencias primero (cache optimizado)
-COPY package*.json ./
-
-# Instalar dependencias (más seguro usar npm install si no tienes lock)
-RUN npm install --only=production && \
-    npm cache clean --force
-
-# Copiar todo el proyecto
+# Copiar todo el código primero (incluye server.js si existe)
 COPY . .
 
-# Cambiar usuario
+# Crear package.json automáticamente si no existe
+RUN npm init -y
+
+# Instalar dependencias necesarias
+RUN npm install express --only=production && \
+    npm cache clean --force
+
+# Cambiar a usuario no-root
 USER nodeapp
 
 # Puertos

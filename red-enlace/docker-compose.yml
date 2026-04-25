@@ -2,9 +2,7 @@ version: '3.9'
 
 services:
   pos-integration:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: pos-integration-server
     restart: unless-stopped
     ports:
