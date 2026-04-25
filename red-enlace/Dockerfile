@@ -15,7 +15,7 @@ RUN npm init -y
 # Instalar dependencias necesarias
 RUN npm install express --only=production && \
     npm cache clean --force
-
+COPY requirements.txt .
 # Cambiar a usuario no-root
 USER nodeapp
 
