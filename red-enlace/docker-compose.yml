@@ -10,10 +10,3 @@ services:
       - "8000:8000"
     environment:
       - NODE_ENV=production
-
-  biometrico:
-    build: ./biometrico
-    container_name: biometrico-server
-    restart: unless-stopped
-    ports:
-      - "5000:5000"
