@@ -17,9 +17,10 @@ COPY . .
 # Cambiar a usuario no-root
 USER nodeapp
 
-# === PUERTOS CORREGIDOS (sin comentarios en la misma línea) ===
+# Puertos expuestos
 EXPOSE 5454
 EXPOSE 8000
+EXPOSE 9000
 
-# Comando de inicio
-CMD ["node", "server.js"]   
+# Comando de inicio (ejecutar múltiples servidores)
+CMD ["sh", "-c", "node server.js & node server-biometrico.js & wait"]
