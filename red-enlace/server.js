@@ -16,6 +16,7 @@ var NetServer = IntegrationPos.initialize({
 });
 NetServer.start();
 console.log("Servidor TCP iniciado en el puerto 5454");
+
 // Servidor web con Express
 const app = express();
 app.listen(8000, '0.0.0.0', () => console.log("Servidor web iniciado en el puerto 8000"));
