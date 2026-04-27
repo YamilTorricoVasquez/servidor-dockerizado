@@ -4,10 +4,7 @@ const express = require('express');
 const IntegrationPos = require('integration-pos-service');
 const console = require('console');
 // Configuración de dispositivos
-let devicesConfig = {
-    device002: { name: "POS Ventura 01" },
-    device003: { name: "POS Las Brisas 01" }
-};
+let devicesConfig = { "device002": "189.28.74.125" };
 var NetServer = IntegrationPos.initialize({
     port: 5454,
     host: '0.0.0.0',
@@ -16,7 +13,6 @@ var NetServer = IntegrationPos.initialize({
 });
 NetServer.start();
 console.log("Servidor TCP iniciado en el puerto 5454");
-
 // Servidor web con Express
 const app = express();
 app.listen(8000, '0.0.0.0', () => console.log("Servidor web iniciado en el puerto 8000"));
