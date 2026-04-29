@@ -1,0 +1,22 @@
+# Dockerfile.postgresql
+FROM postgres:16
+
+# Switch to root
+USER root
+
+# Install additional tools and extensions
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    postgresql-contrib \
+    postgresql-17-postgis-3 \
+    postgresql-17-postgis-3-scripts \
+    nano \
+    vim \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Expose PostgreSQL port
+EXPOSE 5419
+
+# Switch to postgres user
+USER postgres

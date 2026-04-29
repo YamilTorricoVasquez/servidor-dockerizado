@@ -1,0 +1,41 @@
+# version: '3.8'
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile.odoo
+    container_name: odoo-web-v19
+    user: root
+    depends_on:
+      - db
+    ports:
+      - "1919:8069"
+    volumes:
+      - odoo-web-data-19:/var/lib/odoo
+      - ./config_odoo:/etc/odoo
+      - ./dev_addons:/mnt/extra-addons
+      - ./enterprise:/mnt/enterprise
+      - ./log:/var/log/odoo
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=myodoo
+
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgresql
+    container_name: odoo-db-v19
+    environment:
+      - POSTGRES_DB=postgres      
+      - POSTGRES_PASSWORD=myodoo
+      - POSTGRES_USER=odoo
+      # Removido PGDATA, usará el default
+    volumes:
+      - odoo-db-data-19:/var/lib/postgresql/data  # Ruta simplificada
+    ports:
+      - "5419:5432"
+
+volumes:
+  odoo-web-data-19:
+  odoo-db-data-19:

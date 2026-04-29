@@ -1,0 +1,38 @@
+FROM odoo:19.0
+
+# Switch to root to install dependencies
+USER root
+
+# Install additional system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python3-pip \
+    git \
+    nano \
+    wget \
+    xfonts-75dpi \
+    xfonts-base \
+    fontconfig \
+    fonts-liberation \
+    fonts-dejavu \
+    fonts-noto \
+    && wget -q https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_amd64.deb \
+    && apt-get install -y --no-install-recommends ./wkhtmltox_0.12.6.1-3.jammy_amd64.deb \
+    && rm wkhtmltox_0.12.6.1-3.jammy_amd64.deb \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+# COPY requirements.txt /tmp/requirements.txt
+# RUN pip3 install --upgrade pip
+# RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+
+
+# Switch back to odoo user
+USER odoo
+
+# Copy custom configuration
+COPY ./config_odoo/odoo.conf /etc/odoo/
+COPY ./dev_addons /mnt/extra-addons/dev_addons
+
+# Create necessary directories
+RUN mkdir -p /mnt/extra-addons/dev_addons
